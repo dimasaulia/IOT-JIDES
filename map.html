@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAP</title>
+    <style>
+        .map{
+            height: 500px;
+            width: 900px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Google map point tes</h1>
+        <div class="map" id="map"></div>
+    </center>
+
+    <script>
+        var map;
+        var InfoObj = [];
+        var centerCords ={
+            lat: -2.723657, 
+            lng: 111.169605
+        };
+
+        var icons = {
+            info: {
+                icon: 'icons8-rfid-sensor-30.png'
+            }
+        }
+
+        var markersOnMap = [
+            {
+                placeName : 'Node-101',
+                LatLng: [{
+                    lat: -2.723657,
+                    lng: 111.169605
+                }],
+                type: 'info',
+            },
+            {   
+                placeName : 'Node-102',
+                LatLng: [{
+                    lat: -2.723794, 
+                    lng: 111.169748
+                }],
+                type: 'info',
+            },
+        ]
+
+        function addMarkerInfo(){
+            for(var i = 0; i < markersOnMap.length; i++){
+                var contentString = '<h3>' + markersOnMap[i].placeName + '</h3>';
+                
+                const marker = new google.maps.Marker({
+                    position: markersOnMap[i].LatLng[0],
+                    icon: icons[markersOnMap[i].type].icon,
+                    map: map
+                });
+
+                const infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                });
+
+                marker.addListener("click", function() {
+                    infowindow.open(map, marker);
+                });
+            }
+        }
+
+        function initMap(){
+            map = new google.maps.Map(document.getElementById('map'),{
+                zoom: 15,
+                center: centerCords
+            });
+            addMarkerInfo()
+        }
+
+        window.onload = function(){
+            initMap();
+        };
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_p2-9jTc9Q8IooGNEq-4egCApkLGtXRI&callback=initMap" type="text/javascript"></script>
+</body>
+</html>
