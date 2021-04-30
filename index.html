@@ -109,6 +109,8 @@
       firebase.database().ref('NODE/Node-101').on('value',function(snapshot){
         var string = "Pintu Air ID = ";
         string += snapshot.val().Node_ID;
+        string += "<br> Status = ";
+        string += snapshot.val().Status;
         string +=  "<br> Kedalaman Air = ";
         string += snapshot.val().Kedalaman;
         string += "<br> Arus Air = "
